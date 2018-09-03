@@ -32,9 +32,9 @@ def won?(board)
 
   WIN_COMBINATIONS.each do |combo|
     if pos_X == combo
-      p pos_X
+      return pos_X
     elsif pos_O == combo
-      p pos_O
+      return pos_O
     else
       nil
     end
