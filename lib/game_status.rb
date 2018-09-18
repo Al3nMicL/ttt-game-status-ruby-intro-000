@@ -4,8 +4,10 @@ def position_taken?(board, index)
   !(board[index].nil? || board[index] == " ")
 end
 
-# example board
+# example boards
+# board = [" ", " ", " ", " ", " ", " ", " ", " ", " "] 
 board = ["X", "O", "X", "O", "X", "O", "X", "X", "O"] 
+
 # Define your WIN_COMBINATIONS constant
 =begin
  # Board visual
@@ -13,6 +15,7 @@ board = ["X", "O", "X", "O", "X", "O", "X", "X", "O"]
  3 | 4 | 5
  6 | 7 | 8
 =end
+
 WIN_COMBINATIONS = [
   [0,1,2], # Top horizontal
   [3,4,5], # Middle horizontal
@@ -24,23 +27,30 @@ WIN_COMBINATIONS = [
   [2,4,6] # / diagonal
 ]
 
+def won?(board)
+
 @count_letter = lambda do |arr, letter| 
   true if arr.count(letter) === 3
 end
 
-def won?(board)
-  win_combo = nil
-  WIN_COMBINATIONS.each do |combo|
-    positions = [ board[combo[0]], board[combo[1]], board[combo[2]] ]
-    if @count_letter[positions, "O"]
-       win_combo = combo
-    elsif @count_letter[positions, "X"]
-       win_combo = combo
-    else
-      nil
+  if !board.empty? && board.all? { |pos| pos == " " || pos == nil} #https://stackoverflow.com/a/16663549
+    return false
+
+  else
+
+    WIN_COMBINATIONS.each do |combo|
+      positions = [ board[combo[0]], board[combo[1]], board[combo[2]] ]
+      if @count_letter[positions, "O"] 
+        return combo
+      elsif @count_letter[positions, "X"] 
+        return combo
+      else
+        false
+      end
     end
+
   end
-  return win_combo
+
 end
 
 # binding.pry
