@@ -1,10 +1,11 @@
+# require 'pry'
 # Helper Method
 def position_taken?(board, index)
   !(board[index].nil? || board[index] == " ")
 end
 
 # example board
-board = ["O", " ", "X", "O", " ", "X", "O", " ", " "]
+board = ["X", "O", "X", "O", "X", "O", "X", "X", "O"] 
 # Define your WIN_COMBINATIONS constant
 =begin
  # Board visual
@@ -23,22 +24,24 @@ WIN_COMBINATIONS = [
   [2,4,6] # / diagonal
 ]
 
-# see >> https://stackoverflow.com/a/13660352
-@positions = Proc.new { |board, letter| board.each_index.select{|i| board[i] == letter} }
+@count_letter = lambda do |arr, letter| 
+  true if arr.count(letter) === 3
+end
 
 def won?(board)
-  pos_X = @positions[board, "X"]
-  pos_O = @positions[board, "O"]
-
+  win_combo = nil
   WIN_COMBINATIONS.each do |combo|
-    if pos_X == combo
-        p pos_X
-    elsif pos_O == combo
-        p  pos_O
+    positions = [ board[combo[0]], board[combo[1]], board[combo[2]] ]
+    if @count_letter[positions, "O"]
+       win_combo = combo
+    elsif @count_letter[positions, "X"]
+       win_combo = combo
     else
       nil
     end
   end
+  return win_combo
 end
 
+# binding.pry
 won?(board)
