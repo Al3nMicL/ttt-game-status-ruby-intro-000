@@ -27,6 +27,10 @@ WIN_COMBINATIONS = [
   [2,4,6] # / diagonal
 ]
 
+def full?(board)
+  board.detect { |i| i == " " || nil} ? false : true
+end
+
 def won?(board)
 
 @count_letter = lambda do |arr, letter| 
