@@ -28,7 +28,7 @@ WIN_COMBINATIONS = [
 ]
 
 def full?(board)
-  board.detect { |i| i == " " || nil} ? false : true
+  board.detect { |i| i == " " || i == nil} ? false : true
 end
 
 def won?(board)
@@ -55,6 +55,20 @@ end
 
   end
 
+end
+
+def draw?(board)
+  # returns true if the board has not been won and is full 
+  if !won?(board) && full?(board)
+    return true
+   # and false if the board is not won and the board is not full, 
+  elsif !won?(board) && !full?(board)
+    return false
+ # and false if the board is won
+  elsif won?(board)
+    return false    
+  end
+  
 end
 
 # binding.pry
