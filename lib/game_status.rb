@@ -28,48 +28,55 @@ WIN_COMBINATIONS = [
 ]
 
 def full?(board)
-  board.detect { |i| i == " " || i == nil} ? false : true
+  if board.count { |x| x == "X" || x == "O" } == 9 
+    true
+  else
+    false
+  end
 end
 
 def won?(board)
+  win_combo = nil
 
-@count_letter = lambda do |arr, letter| 
-  true if arr.count(letter) === 3
-end
+  count_letter = lambda do |arr, letter| 
+    true if arr.count(letter) === 3
+  end
 
-  if !board.empty? && board.all? { |pos| pos == " " || pos == nil} #https://stackoverflow.com/a/16663549
-    return false
+  if board.count { |x| x == " "} == 9
+    false
 
   else
 
     WIN_COMBINATIONS.each do |combo|
       positions = [ board[combo[0]], board[combo[1]], board[combo[2]] ]
-      if @count_letter[positions, "O"] 
-        return combo
-      elsif @count_letter[positions, "X"] 
-        return combo
+      if count_letter[positions, "O"] 
+        win_combo = combo
+      elsif count_letter[positions, "X"] 
+        win_combo = combo
+      elsif full?(board)
+        false
       else
         false
       end
     end
 
   end
-
+  return win_combo
 end
 
 def draw?(board)
   # returns true if the board has not been won and is full 
   if !won?(board) && full?(board)
-    return true
+    true
    # and false if the board is not won and the board is not full, 
   elsif !won?(board) && !full?(board)
-    return false
+    false
  # and false if the board is won
   elsif won?(board)
-    return false    
+    false
   end
   
 end
 
 # binding.pry
-won?(board)
+# won?(board)
