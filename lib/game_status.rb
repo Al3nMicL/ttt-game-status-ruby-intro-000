@@ -4,8 +4,8 @@ def position_taken?(board, index)
 end
 
 # example boards
-# board = [" ", " ", " ", " ", " ", " ", " ", " ", " "] 
-board = ["X", "O", "X", "O", "X", "O", "X", "X", "O"] 
+# board = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
+board = ["X", "O", "X", "O", "X", "O", "X", "X", "O"]
 
 # Define your WIN_COMBINATIONS constant
 =begin
@@ -27,7 +27,7 @@ WIN_COMBINATIONS = [
 ]
 
 def full?(board)
-  if board.count { |x| x == "X" || x == "O" } == 9 
+  if board.count { |x| x == "X" || x == "O" } == 9
     true
   else
     false
@@ -37,7 +37,7 @@ end
 def won?(board)
   win_combo = nil
 
-  count_letter = lambda do |arr, letter| 
+  count_letter = lambda do |arr, letter|
     true if arr.count(letter) === 3
   end
 
@@ -48,9 +48,9 @@ def won?(board)
 
     WIN_COMBINATIONS.each do |combo|
       positions = [ board[combo[0]], board[combo[1]], board[combo[2]] ]
-      if count_letter[positions, "O"] 
+      if count_letter[positions, "O"]
         win_combo = combo
-      elsif count_letter[positions, "X"] 
+      elsif count_letter[positions, "X"]
         win_combo = combo
       elsif full?(board)
         false
@@ -64,17 +64,17 @@ def won?(board)
 end
 
 def draw?(board)
-  # returns true if the board has not been won and is full 
+  # returns true if the board has not been won and is full
   if !won?(board) && full?(board)
     true
-   # and false if the board is not won and the board is not full, 
+   # and false if the board is not won and the board is not full,
   elsif !won?(board) && !full?(board)
     false
  # and false if the board is won
   elsif won?(board)
     false
   end
-  
+
 end
 
 def over?(board)
@@ -91,7 +91,7 @@ def winner(board)
   pos = won?(board) ? won?(board) : 9 # used an int to avoid undefined method `[]' for nil:NilClass
   player = board.values_at(pos[0], pos[1], pos[2])
 
-  count_letter = lambda do |arr, letter| 
+  count_letter = lambda do |arr, letter|
     true if arr.count(letter) === 3
   end
 
@@ -100,8 +100,8 @@ def winner(board)
     winner = "X"
   elsif count_letter[player, "O"]
     winner = "O"
-  end 
-    
+  end
+
   return winner
 end
 
